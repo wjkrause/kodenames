@@ -251,7 +251,8 @@ var movieData = ["The Shawshank Redemption",
 	"Swades: We, the People"
 ];
 
-var defaultData = ["AFRICA",
+var defaultData = [
+	"Africa",
 	"Agent",
 	"Air",
 	"Alien",
