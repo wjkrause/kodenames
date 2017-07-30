@@ -1,37 +1,22 @@
+* {
+	box-sizing:border-box;
+}
 
 html, body {
-  height: 100%;
+  height: 100vh;
 }
 
 body {
-	font-family : sans-serif;
+	font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 	padding: 2rem;
 	margin: 0;
 	font-size: 1.3rem;
 	color: #444444;
+	display: flex;
+	flex-direction: column;
 }
 
-.red-team { 
-  background-color: red;
-}
-
-.blue-team {
-  background-color: blue;
-}
-
-.neutral {
-  background-color: yellow;
-}
-
-.bomb {
-  background-color: #EEEEEE;
-}
-
-.guessed {
-  background-color: green;
-}
-
-button, select, span#first, #confirmText {
+button, select, span.label {
 	outline: 0;
 	border: 0;
 	font-size: 1rem;
@@ -41,7 +26,7 @@ input {
 	padding: .5rem;
 	border-radius: 2px;
 	outline: 0;
-	border : 1px #DDDDDD solid;
+	border: 1px #DDDDDD solid;
 }
 
 select {
@@ -59,6 +44,7 @@ button {
 
 button:hover {
 	background: #69F0AE;
+	cursor: pointer;
 }
 
 input {
@@ -88,30 +74,27 @@ a {
 
 #board {
 	width: 100%;
-	height: 80%;
 	display: flex;
-	flex: 1;
-	border-left: 1px #DDDDDD solid;
-	border-right: 1px #DDDDDD solid;
+	border: 1px #DDDDDD solid;
 	border-radius: 2px;
+	flex: 1;
 }
 
 .row {
 	display: flex;
 	flex-direction: column;
 	width: 20%;
-	border : 1px #DDDDDD solid;
 }
 
 .word {
 	align-self: center;
 	flex: 1;
-	text-align : center;
-	vertical-align : middle;
-	cursor : pointer;
-	border : 1px #DDDDDD solid;
-	font-weight : bold;
-	width : 100%;
+	text-align: center;
+	vertical-align: middle;
+	cursor: pointer;
+	border: 1px #DDDDDD solid;
+	font-weight: bold;
+	width: 100%;
 	line-height: 100%;
 	display: flex;
 	align-items: center;
@@ -121,6 +104,8 @@ a {
 .word > div {
 	margin: 0 auto;
 	transition: all .2s ease;
+	padding: 0 1.5rem;
+	line-height: 1.25;
 }
 
 .word:hover {
@@ -128,7 +113,7 @@ a {
 }
 
 .word:hover > div {
-	transform: scale(1.2);
+	transform: scale(1.15);
 }
 
 #spymaster {
@@ -154,16 +139,6 @@ a {
   top: -10px;
 }
 
-// .redStart {
-// 	border-left: #FF5252;
-// 	border-left-style: solid;
-// }
-
-// .blueStart {
-// 	border-left: #448AFF;
-// 	border-left-style: solid;
-// }
-
 .score-container {
 	font-weight: bold;
 }
@@ -176,24 +151,45 @@ a {
 	border-color: white;
 }
 
+.red-team, .red-team:hover { 
+  background: #FF8A80;
+}
+
+.blue-team, .blue-team:hover {
+  background: #82B1FF;
+}
+
+.neutral, .neutral:hover {
+  background: #FFFF8D;
+}
+
+.bomb, .bomb:hover {
+  background: #BDBDBD;
+}
+
+.guessed, .guessed:hover {
+  background: #00E676;
+}
+
 .score-item {
-	border: white 1px solid;
-	width: 1.5rem;
-	height: 1.5rem;
+	border: white 2px solid;
+	width: 3rem;
+	height: 3rem;
 	border-radius: 100%;
 	padding: .25rem;
 	display: block;
 	float: left;
 	text-align: center;
+	line-height: 2.25rem;
 }
 
 #redScore{
 	color: #FF5252;
-	margin-right: 2rem;
-	border-color: #FF5252;
+	margin-right: 1rem;
+	border-color: #FF8A80;
 }
 
 #blueScore{
 	color: #448AFF;
-	border-color: #448AFF;
+	border-color: #82B1FF;
 }
