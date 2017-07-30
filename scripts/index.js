@@ -130,6 +130,7 @@ function createNewGame() {
 
 function clicked(value) {
   var elem = $("#" + value);
+
 	if (spyMasterMode) {
 		//spymaster mode
     if (elem.hasClass(GUESSED)) {
@@ -140,15 +141,26 @@ function clicked(value) {
 	} else {
 		//guessers mode
 		var word = wordsSelected[value];
+
+    function doStuff() {
+      if (elem.data('guessed')) {
+        elem.removeClass(cells[value]);
+        elem.data('guessed', false);
+      } else {
+        elem.addClass(cells[value]);
+        elem.data('guessed', true);
+      }
+    }
+
 		if (document.getElementById("confirm").checked) {
 			if (window.confirm("Are sure you want to select '" + word + "'?")) {
-				// reveal the cell by adding the class from the corresponding index in the array
-				elem.addClass(cells[value]);
+        doStuff();
 			}
 		} else {
-			elem.addClass(cells[value]);
+      doStuff();
 		}
 	}
+
 	updateScore();
 }
 
@@ -194,16 +206,28 @@ function updateScore() {
 
 function spyMaster() {
 	//TODO: randomize or organize tiles for easier comparing
+  var elem;
   if (!spyMasterMode) {
     spyMasterMode = true;
     for (var i = 0; i < NUMBER_OF_WORDS; i++) {
-      $("#" + i).addClass(cells[i]);
+      elem = $("#" + i);
+      elem.addClass(cells[i]);
+      if (elem.data('guessed')) {
+        elem.addClass(GUESSED);
+      }
     }
   } else {
     spyMasterMode = false;
 
     for (var i = 0; i < NUMBER_OF_WORDS; i++) {
-      $("#" + i).removeClass(cells[i]);
+      elem = $("#" + i);
+      var toRemove = [GUESSED];
+
+      if (!elem.data('guessed')) {
+        toRemove.push(cells[i]);
+      }
+
+      elem.removeClass(toRemove.join(' '));
     }
   }
 }
