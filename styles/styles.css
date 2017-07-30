@@ -99,6 +99,7 @@ a {
 	display: flex;
 	align-items: center;
 	transition: background .2s ease;
+	letter-spacing: .25px;
 }
 
 .word > div {
