@@ -1,5 +1,5 @@
 /*
-Notes: 
+Notes:
 'data' is lazily imported from the html
 'seedrandom' is also imported from html. it gives deterministic random #s based on a seed set in fire()
 */
@@ -114,7 +114,7 @@ function createNewGame() {
 		$('#score-container').addClass('blueStart').removeClass('redStart');
 	}
 
-	// add neutrals 
+	// add neutrals
 	for (var i = 0; i < 7; i++) {
 		cells.push(NEUTRAL);
 	}
@@ -129,21 +129,38 @@ function createNewGame() {
 }
 
 function clicked(value) {
+  var elem = $("#" + value);
+
 	if (spyMasterMode) {
 		//spymaster mode
-		$("#" + value).addClass(GUESSED);
+    if (elem.hasClass(GUESSED)) {
+      elem.removeClass(GUESSED);
+    } else {
+		  elem.addClass(GUESSED);
+    }
 	} else {
 		//guessers mode
 		var word = wordsSelected[value];
+
+    function doStuff() {
+      if (elem.data('guessed')) {
+        elem.removeClass(cells[value]);
+        elem.data('guessed', false);
+      } else {
+        elem.addClass(cells[value]);
+        elem.data('guessed', true);
+      }
+    }
+
 		if (document.getElementById("confirm").checked) {
 			if (window.confirm("Are sure you want to select '" + word + "'?")) {
-				// reveal the cell by adding the class from the corresponding index in the array
-				$("#" + value).addClass(cells[value]);
+        doStuff();
 			}
 		} else {
-			$("#" + value).addClass(cells[value]);
+      doStuff();
 		}
 	}
+
 	updateScore();
 }
 
@@ -189,10 +206,30 @@ function updateScore() {
 
 function spyMaster() {
 	//TODO: randomize or organize tiles for easier comparing
-	spyMasterMode = true;
-	for (var i = 0; i < NUMBER_OF_WORDS; i++) {
-		$("#" + i).addClass(cells[i]);
-	}
+  var elem;
+  if (!spyMasterMode) {
+    spyMasterMode = true;
+    for (var i = 0; i < NUMBER_OF_WORDS; i++) {
+      elem = $("#" + i);
+      elem.addClass(cells[i]);
+      if (elem.data('guessed')) {
+        elem.addClass(GUESSED);
+      }
+    }
+  } else {
+    spyMasterMode = false;
+
+    for (var i = 0; i < NUMBER_OF_WORDS; i++) {
+      elem = $("#" + i);
+      var toRemove = [GUESSED];
+
+      if (!elem.data('guessed')) {
+        toRemove.push(cells[i]);
+      }
+
+      elem.removeClass(toRemove.join(' '));
+    }
+  }
 }
 
 function shuffle(array) {
